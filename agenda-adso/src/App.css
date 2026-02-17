@@ -1,42 +1,92 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+/* Contenedor principal de toda la aplicación 
+.app-container {  */
+  /* max-width: 400px;       ancho tipo app móvil  */
+  /* margin: 20px auto;      centra la app en la pantalla  */
+  /* font-family: sans-serif; 
+}  */
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+/* Título grande "Agenda ADSO 📒" */ 
+/* .app-title { 
+  text-align: center; 
+  color: #01863a;         /* verde SENA */ 
+  /* margin-bottom: 20px; 
+}  */ */
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* Texto pequeño bajo el título ("Contactos guardados") */ 
+/* .app-subtitle { 
+  text-align: center; 
+  font-size: 14px; 
+  color: #2e2e2e; 
+  margin-top: 0; 
+  margin-bottom: 16px; 
+}  */
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+/* Tarjeta de cada contacto */ 
+/* .card-contacto { 
+  border: 1px solid rgb(0, 212, 28); 
+  background-color: #ffffff; 
+  padding: 10px; 
+  margin: 5px 0; 
+  border-radius: 8px; 
+}  */
 
-.card {
-  padding: 2em;
-}
+/* Nombre del contacto dentro de la tarjeta */ 
+/* .card-nombre { 
+  margin: 0 0 6px 0; 
+  font-size: 16px; 
+  font-weight: bold; 
+}  */
 
-.read-the-docs {
-  color: #888;
-}
+/* Líneas de información (teléfono, correo) */ 
+/* .card-linea { 
+  margin: 4px 0; 
+  font-size: 14px; 
+}  */
+
+/* Etiqueta del contacto (por ejemplo "Instructor", "Cliente", "Compañera") */ 
+/* .card-etiqueta { 
+  margin: 4px 0; 
+  font-size: 12px; 
+  color: rgb(19, 206, 5); 
+}  */
+
+/* Nota final al pie ("Versión 0.1...") */ 
+/* .app-nota { 
+  font-size: 12px; 
+  text-align: center; 
+  margin-top: 30px; 
+  color: #888; 
+}  */
+
+.app-container { max-width: 520px; margin: 2rem auto; font-family: Arial, sans-serif; } 
+.app-title { color:#008037; text-align:center; margin-bottom:1rem; } 
+.form-contacto { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; } 
+.form-contacto input { padding:8px; border-radius:6px; border:1px solid #ccc; font-size:14px; } 
+.form-contacto button { background:#008037; color:#fff; border:0; padding:10px; border-radius:6px; cursor:pointer; } 
+.form-contacto button:hover { background:#006b2f; } 
+.tarjeta-contacto { border:1px solid #ddd; border-radius:8px; padding:1rem; background:#fff; margin-bottom:.5rem; } 
+.tarjeta-contacto h3 { color:#008037; margin:0 0 .3rem; } 
+.btn-eliminar { margin-top:.15rem; background:#c62828; color:#fff; border:0; padding:.5rem .75rem; border-radius:6px; cursor:pointer; } 
+.btn-eliminar:hover { background:#8e0000; } 
+ 
+/* Espaciados dentro de la tarjeta */ 
+.tarjeta-contacto { display: flex; flex-direction: column; gap: 4px; } 
+
+/* Estilo opcional para las líneas de datos */ 
+.tarjeta-contacto .dato { margin: 0; color: #333; } 
+
+/* La etiqueta (rol) en su propia línea */ 
+.tarjeta-contacto .tag { 
+ margin: 0; 
+ color: #555; 
+ font-size: 0.9rem;} 
+
+ /* Contenedor del botón: lo empuja hacia la derecha y separa del contenido */ 
+.tarjeta-contacto .acciones { 
+ margin-top: 8px; 
+ display: flex; 
+ justify-content: flex-end; 
+} 
+
+/* Si ya tenías margen en .btn-eliminar, puedes quitarlo */ 
+.btn-eliminar { margin-top: 0; } 
