@@ -1,0 +1,11 @@
+{
+"contactos": [
+{
+"id": 1,
+"nombre": "Juan",
+"telefono": "3024613854",
+"correo": "juanjo@gmail.com",
+"etiqueta": "Estudiante"
+}
+]
+}
