@@ -1,11 +1,28 @@
 {
-"contactos": [
-{
-"id": 1,
-"nombre": "Juan",
-"telefono": "3024613854",
-"correo": "juanjo@gmail.com",
-"etiqueta": "Estudiante"
-}
-]
+  "contactos": [
+    {
+      "id": "5228",
+      "nombre": "Juvelly",
+      "telefono": "3115695421",
+      "correo": "juvesena@gmail.com",
+      "empresa": "SENA",
+      "etiqueta": "Estudiante De ADSO"
+    },
+    {
+      "id": "9f2a",
+      "nombre": "Adrian",
+      "telefono": "3127598456",
+      "correo": "petro@gmail.com",
+      "empresa": "SENA",
+      "etiqueta": "Estudiante De ADSO"
+    },
+    {
+      "id": "3bcc",
+      "nombre": "Karol Nicol",
+      "telefono": "3127542513",
+      "correo": "karoln@gmail.com",
+      "empresa": "Plasticos Truher",
+      "etiqueta": "Analista De Calidad"
+    }
+  ]
 }
