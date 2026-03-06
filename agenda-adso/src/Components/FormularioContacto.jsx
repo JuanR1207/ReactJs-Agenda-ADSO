@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function FormularioContacto({ onAgregar }) {
+export default function FormularioContacto({
+  onAgregar,
+  onActualizar,
+  contactoEditando,
+}) {
+
   const [form, setForm] = useState({
     nombre: "",
     telefono: "",
@@ -17,10 +22,27 @@ export default function FormularioContacto({ onAgregar }) {
 
   const [enviando, setEnviando] = useState(false);
 
+  // ================= CARGAR DATOS SI SE ESTÁ EDITANDO =================
+  useEffect(() => {
+    if (contactoEditando) {
+      setForm({
+        nombre: contactoEditando.nombre || "",
+        telefono: contactoEditando.telefono || "",
+        correo: contactoEditando.correo || "",
+        empresa: contactoEditando.empresa || "",
+        etiqueta: contactoEditando.etiqueta || "",
+      });
+    }
+  }, [contactoEditando]);
+
   const onChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
+  // ================= VALIDACIÓN =================
   const validarFormulario = () => {
     const nuevosErrores = {
       nombre: "",
@@ -59,6 +81,7 @@ export default function FormularioContacto({ onAgregar }) {
     );
   };
 
+  // ================= ENVIAR FORMULARIO =================
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -67,10 +90,13 @@ export default function FormularioContacto({ onAgregar }) {
     try {
       setEnviando(true);
 
-      // 🔥 Forzamos a que se vea el estado "Guardando..."
       await new Promise((resolve) => setTimeout(resolve, 300));
 
-      await onAgregar(form);
+      if (contactoEditando) {
+        await onActualizar(form);
+      } else {
+        await onAgregar(form);
+      }
 
       setForm({
         nombre: "",
@@ -104,7 +130,7 @@ export default function FormularioContacto({ onAgregar }) {
             Nombre *
           </label>
           <input
-            className="w-full rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500"
+            className="w-full rounded-xl border-gray-300 focus:ring-teal-500 focus:border-teal-500"
             name="nombre"
             value={form.nombre}
             onChange={onChange}
@@ -124,7 +150,7 @@ export default function FormularioContacto({ onAgregar }) {
           <input
             type="tel"
             maxLength={10}
-            className="w-full rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500"
+            className="w-full rounded-xl border-gray-300 focus:ring-teal-500 focus:border-teal-500"
             name="telefono"
             value={form.telefono}
             onChange={onChange}
@@ -135,6 +161,7 @@ export default function FormularioContacto({ onAgregar }) {
             </p>
           )}
         </div>
+
       </div>
 
       {/* Correo */}
@@ -143,7 +170,7 @@ export default function FormularioContacto({ onAgregar }) {
           Correo *
         </label>
         <input
-          className="w-full rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500"
+          className="w-full rounded-xl border-gray-300 focus:ring-teal-500 focus:border-teal-500"
           name="correo"
           value={form.correo}
           onChange={onChange}
@@ -161,7 +188,7 @@ export default function FormularioContacto({ onAgregar }) {
           Empresa
         </label>
         <input
-          className="w-full rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500"
+          className="w-full rounded-xl border-gray-300 focus:ring-teal-500 focus:border-teal-500"
           name="empresa"
           value={form.empresa}
           onChange={onChange}
@@ -174,7 +201,7 @@ export default function FormularioContacto({ onAgregar }) {
           Etiqueta
         </label>
         <input
-          className="w-full rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500"
+          className="w-full rounded-xl border-gray-300 focus:ring-teal-500 focus:border-teal-500"
           name="etiqueta"
           value={form.etiqueta}
           onChange={onChange}
@@ -185,11 +212,15 @@ export default function FormularioContacto({ onAgregar }) {
       <button
         type="submit"
         disabled={enviando}
-        className="w-full md:w-auto bg-purple-600 hover:bg-purple-700
-                   disabled:bg-purple-300 disabled:cursor-not-allowed
-                   text-white px-6 py-3 rounded-xl font-semibold shadow-sm"
+        className="w-full md:w-auto bg-teal-500 hover:bg-teal-600
+        disabled:bg-teal-300 disabled:cursor-not-allowed
+        text-white px-6 py-3 rounded-xl font-semibold shadow-sm"
       >
-        {enviando ? "Guardando..." : "Agregar contacto"}
+        {enviando
+          ? "Guardando..."
+          : contactoEditando
+          ? "Actualizar contacto"
+          : "Agregar contacto"}
       </button>
 
     </form>

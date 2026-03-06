@@ -5,43 +5,65 @@ export default function ContactoCard({
   empresa,
   etiqueta,
   onEliminar,
+  onEditar,
 }) {
   return (
-    <div className="bg-white shadow-sm rounded-2xl p-5 border border-gray-100 flex justify-between items-start hover:shadow-md transition">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 flex justify-between items-center">
 
-      <div className="space-y-1">
+      {/* Información del contacto */}
+      <div>
 
         <h3 className="text-lg font-semibold text-gray-900">
           {nombre}
         </h3>
 
-        <p className="text-sm text-gray-600">
-          📞 {telefono}
-        </p>
+        {telefono && (
+          <p className="text-sm text-gray-600">
+            📞 {telefono}
+          </p>
+        )}
 
-        <p className="text-sm text-gray-600">
-          ✉️ {correo}
-        </p>
+        {correo && (
+          <p className="text-sm text-gray-600">
+            ✉️ {correo}
+          </p>
+        )}
 
+        {/* Empresa (si existe) */}
         {empresa && (
-          <p className="text-sm text-gray-500">
-            🏢 Empresa: <span className="font-medium">{empresa}</span>
+          <p className="text-gray-600 text-sm flex items-center gap-2">
+            <span className="text-purple-500 text-lg">🏢</span>
+            {empresa}
           </p>
         )}
 
         {etiqueta && (
-          <span className="inline-block mt-2 px-3 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-700">
+          <span className="inline-block mt-1 text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">
             {etiqueta}
           </span>
         )}
+
       </div>
 
-      <button
-        onClick={onEliminar}
-        className="text-sm text-red-600 hover:text-red-800 font-semibold transition"
-      >
-        Eliminar
-      </button>
+      {/* Botones */}
+      <div className="flex gap-2">
+
+        <button
+          onClick={onEditar}
+          className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-lg"
+        >
+          Editar
+        </button>
+
+        <button
+          onClick={onEliminar}
+          className="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded-lg"
+        >
+          Eliminar
+        </button>
+
+      </div>
+
     </div>
   );
 }
