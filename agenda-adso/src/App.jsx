@@ -25,6 +25,10 @@ function App() {
   const [ordenAsc, setOrdenAsc] = useState(true);
   const [contactoEditando, setContactoEditando] = useState(null);
 
+  // Modal eliminar
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+  const [contactoAEliminar, setContactoAEliminar] = useState(null);
+
   // ================= CARGAR CONTACTOS =================
   useEffect(() => {
     const cargarContactos = async () => {
@@ -87,21 +91,34 @@ function App() {
     }
   };
 
-  // ================= ELIMINAR CONTACTO =================
-  const onEliminarContacto = async (id) => {
-    try {
-      setError("");
+  // ================= PEDIR ELIMINAR =================
+  const pedirEliminarContacto = (id) => {
+    setContactoAEliminar(id);
+    setMostrarConfirmacion(true);
+  };
 
-      await eliminarContactoPorId(id);
+  // ================= CONFIRMAR ELIMINAR =================
+  const confirmarEliminar = async () => {
+    try {
+      await eliminarContactoPorId(contactoAEliminar);
 
       setContactos((prev) =>
-        prev.filter((c) => c.id !== id)
+        prev.filter((c) => c.id !== contactoAEliminar)
       );
 
     } catch (error) {
       console.error("Error al eliminar contacto:", error);
       setError("No se pudo eliminar el contacto.");
     }
+
+    setMostrarConfirmacion(false);
+    setContactoAEliminar(null);
+  };
+
+  // ================= CANCELAR ELIMINAR =================
+  const cancelarEliminar = () => {
+    setMostrarConfirmacion(false);
+    setContactoAEliminar(null);
   };
 
   // ================= FILTRADO =================
@@ -174,18 +191,20 @@ function App() {
         ) : (
           <>
 
+            {/* Formulario */}
             <FormularioContacto
               onAgregar={onAgregarContacto}
               onActualizar={onActualizarContacto}
               contactoEditando={contactoEditando}
+              onCancelarEdicion={() => setContactoEditando(null)}
             />
 
-            {/* Buscador */}
+            {/* Buscador y orden */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
 
               <input
                 type="text"
-                className="w-full md:flex-1 rounded-xl border-gray-300 text-sm"
+                className="w-full md:flex-1 rounded-xl border-gray-300 focus:ring-teal-500 focus:border-teal-500 text-sm"
                 placeholder="Buscar por nombre, correo, etiqueta o teléfono..."
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
@@ -224,7 +243,7 @@ function App() {
                       correo={c.correo}
                       empresa={c.empresa}
                       etiqueta={c.etiqueta}
-                      onEliminar={() => onEliminarContacto(c.id)}
+                      onEliminar={() => pedirEliminarContacto(c.id)}
                       onEditar={() => setContactoEditando(c)}
                     />
                   ))}
@@ -234,6 +253,43 @@ function App() {
             </section>
 
           </>
+        )}
+
+        {/* Modal confirmar eliminación */}
+        {mostrarConfirmacion && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+
+            <div className="bg-white rounded-2xl shadow-xl p-6 w-80">
+
+              <h2 className="text-lg font-bold mb-2">
+                Eliminar contacto
+              </h2>
+
+              <p className="text-sm text-gray-600 mb-6">
+                ¿Seguro que deseas eliminar este contacto?
+              </p>
+
+              <div className="flex justify-end gap-3">
+
+                <button
+                  onClick={cancelarEliminar}
+                  className="px-4 py-2 bg-gray-200 rounded-xl hover:bg-gray-300"
+                >
+                  Cancelar
+                </button>
+
+                <button
+                  onClick={confirmarEliminar}
+                  className="px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600"
+                >
+                  Eliminar
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
         )}
 
         {/* Footer */}

@@ -4,6 +4,7 @@ export default function FormularioContacto({
   onAgregar,
   onActualizar,
   contactoEditando,
+  onCancelarEdicion, 
 }) {
 
   const [form, setForm] = useState({
@@ -119,6 +120,27 @@ export default function FormularioContacto({
     }
   };
 
+  // ================= CANCELAR EDICIÓN =================
+  const cancelarEdicion = () => {
+    setForm({
+      nombre: "",
+      telefono: "",
+      correo: "",
+      empresa: "",
+      etiqueta: "",
+    });
+
+    setErrores({
+      nombre: "",
+      telefono: "",
+      correo: "",
+    });
+
+    if (onCancelarEdicion) {
+      onCancelarEdicion(); // 👈 informa al padre que ya no se edita
+    }
+  };
+
   return (
     <form onSubmit={onSubmit} className="space-y-6">
 
@@ -208,20 +230,33 @@ export default function FormularioContacto({
         />
       </div>
 
-      {/* Botón */}
-      <button
-        type="submit"
-        disabled={enviando}
-        className="w-full md:w-auto bg-teal-500 hover:bg-teal-600
-        disabled:bg-teal-300 disabled:cursor-not-allowed
-        text-white px-6 py-3 rounded-xl font-semibold shadow-sm"
-      >
-        {enviando
-          ? "Guardando..."
-          : contactoEditando
-          ? "Actualizar contacto"
-          : "Agregar contacto"}
-      </button>
+      {/* Botones */}
+      <div className="flex gap-3 flex-wrap">
+        <button
+          type="submit"
+          disabled={enviando}
+          className="bg-teal-500 hover:bg-teal-600
+          disabled:bg-teal-300 disabled:cursor-not-allowed
+          text-white px-6 py-3 rounded-xl font-semibold shadow-sm"
+        >
+          {enviando
+            ? "Guardando..."
+            : contactoEditando
+            ? "Actualizar contacto"
+            : "Agregar contacto"}
+        </button>
+
+        {contactoEditando && (
+          <button
+            type="button"
+            onClick={cancelarEdicion}
+            className="bg-gray-200 hover:bg-gray-300
+            text-gray-700 px-6 py-3 rounded-xl font-semibold"
+          >
+            Cancelar edición
+          </button>
+        )}
+      </div>
 
     </form>
   );
